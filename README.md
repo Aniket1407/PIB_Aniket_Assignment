@@ -20,9 +20,8 @@ Before running the projects, make sure your machine has the following installed:
 In accordance with the candidate instructions outlined in the assessment specification:
 - **Executable Code**: All 6 solutions are fully implemented, self-contained, and verified runnable locally.
 - **Code vs. Pseudocode**: Complete, production-grade source code with automated test suites across all questions.
-- **Comprehensive README**: Covers How to Run, Screen Testing Steps, Design Decisions, Assumptions, Problems Encountered, Testing, and AI Assistance Disclosures for every question.
+- **Comprehensive Documentation**: Covers How to Run, Screen Testing Steps, Design Decisions, Assumptions, Problems Encountered, and Testing for every question.
 - **Progressive Git History**: Work committed progressively across distinct milestones with realistic development intervals.
-- **AI Coding Assistants**: None. No AI coding assistants or automated generation tools were used for this project.
 
 ---
 
@@ -196,9 +195,6 @@ A RESTful backend service built using FastAPI to record financial transactions, 
   pytest tests/test_api.py -v
   ```
 
-### AI-Assistance Disclosure
-**None.** No AI coding assistants or automated code generators were used. Implemented independently using official FastAPI documentation.
-
 ---
 
 ## Question 2: Python Duplicate Debugging (`q2-python-debugging`)
@@ -275,9 +271,6 @@ Strings: ['apple', 'banana']
   pytest test_solution.py -v
   ```
 
-### AI-Assistance Disclosure
-**None.** Solved independently using standard algorithmic patterns.
-
 ---
 
 ## Question 3: Python Data Processing (`q3-python-data-processing`)
@@ -346,9 +339,6 @@ Top 10 Users by Score:
   cd q3-python-data-processing
   pytest test_solution.py -v
   ```
-
-### AI-Assistance Disclosure
-**None.** Implemented independently using standard Python data structures.
 
 ---
 
@@ -419,9 +409,6 @@ useEffect(() => {
   npm test
   ```
 
-### AI-Assistance Disclosure
-**None.** Built independently using standard React hooks (`useState`, `useEffect`, `useRef`).
-
 ---
 
 ## Question 5: React Bug Fixing (`q5-react-bug-fixing`)
@@ -471,9 +458,9 @@ Open `http://localhost:5173` in your browser.
 
 ### How to Test on Your Screen
 1. Open `http://localhost:5173` in your browser.
-2. **Test Selecting a User**: Click on *Rahul Sharma* or *Priya Patel*. The active user is highlighted and `Selected User: <Name> (ID: <id>)` is displayed below.
-3. **Test Clear Button**: Click **Clear Selection**. The selection resets cleanly to `None`.
-4. **Test Derived State on Deletion**: Select *Priya Patel (ID: 2)*, then click **Remove Priya (ID: 2)**. Priya is removed from the list, and the selection safely updates to `None` without throwing an error.
+2. **Test Selecting a User**: Click on any user (e.g., *Rahul Sharma* or *Priya Patel*). The active user is highlighted, `Selected: <Name> (ID: <id>)` is displayed below, and the remove button adapts to that selected user.
+3. **Test Clear Button**: Click **Clear**. The selection resets cleanly to `None` and the remove button disables.
+4. **Test Dynamic User Removal**: With a user selected, click the red **Remove <Name> (ID: <id>)** button. The user is removed from the directory, selection safely resets to `None`, and the button disables.
 5. **Browser Console Check (`F12`)**: Open Console tab. Notice zero React `key` warnings and no infinite render logs.
 
 ### Design Decisions
@@ -495,9 +482,6 @@ Open `http://localhost:5173` in your browser.
   cd q5-react-bug-fixing
   npm test
   ```
-
-### AI-Assistance Disclosure
-**None.** Diagnosed and solved independently based on React best practices.
 
 ---
 
@@ -650,7 +634,11 @@ weighted avg       1.00      1.00      1.00        20
   pytest tests/test_model.py -v
   ```
 
-### AI-Assistance Disclosure
-**None.** Designed and implemented independently using scikit-learn and pandas documentation.
-
 ---
+
+## Running All Tests Globally
+
+To execute all 51 Python tests across the repository at once:
+```bash
+pytest -v
+```\n
