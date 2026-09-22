@@ -279,4 +279,76 @@ Top 10 Users by Score:
   ```
 
 ### AI-Assistance Disclosure
-**None.** Implemented independently using standard Python data structures.\n
+**None.** Implemented independently using standard Python data structures.
+
+---
+
+## Question 4: React Search & Debouncing (`q4-react-search`)
+
+### Overview
+A React component (`UserSearch.jsx`) that queries `GET /api/users?search=<query>` as the user types, using a 300ms debounce and request-ID tracking to prevent redundant requests and avoid race conditions.
+
+### Follow-up: Why is fetching directly inside useEffect on every keystroke problematic?
+```javascript
+useEffect(() => {
+  fetch("/api/users?search=" + search);
+}, [search]);
+```
+1. **Network Overload**: Typing a 10-character query sends 10 separate HTTP requests, wasting bandwidth and putting heavy strain on the backend.
+2. **Race Conditions**: Network requests finish in arbitrary order depending on network latency. A slower earlier request (e.g. for `"al"`) might resolve *after* a faster later request (e.g. for `"alex"`), overwriting fresh results with outdated data on screen.
+3. **UI Jitter**: State updates rapidly between requests, causing screen flickering.
+
+### System Requirements & Dependencies
+- Node.js 18+ and npm
+- Packages: `react`, `react-dom`, `vite`, `vitest`, `@testing-library/react`
+
+### How to Run the Project
+1. Navigate to the project directory:
+   ```bash
+   cd q4-react-search
+   ```
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
+4. Open the browser at `http://localhost:5173`.
+
+### How to Test on Your Screen
+1. Open `http://localhost:5173` in your browser.
+2. **Test Debouncing**:
+   - Type quickly into the search box.
+   - Notice that requests are not fired with each keystroke; the component waits until you pause typing for 300ms.
+3. **Test Loading Indicator**:
+   - While the search request is pending, `Searching...` appears on screen.
+4. **Test Empty State**:
+   - If a query returns no matching records, `No users found.` appears on screen.
+5. **Test Clearing Search**:
+   - Clearing the input immediately removes results without making unnecessary network requests.
+
+### Design Decisions
+- **Debounce (300ms)**: Implemented directly in `UserSearch.jsx` using `useEffect` and `setTimeout` with clean timer cancellation.
+- **Race Condition Guard (`useRef`)**: Uses `latestRequestIdRef` to track active request IDs and discard stale responses.
+- **URL Encoding**: Used `encodeURIComponent(trimmedQuery)` to ensure query safety.
+
+### Assumptions
+- Leading/trailing whitespace should be trimmed. Empty queries clear results without fetching.
+- A 300ms debounce delay provides responsive user interaction while eliminating network spam.
+
+### Problems Encountered & Solutions
+- Fast typing can cause older network requests to finish after newer ones, overwriting fresh results.
+  - *Fix*: Incremented `latestRequestIdRef.current` on every request; responses matching older IDs are safely ignored.
+
+### How the Solution Was Tested
+- 12 automated unit tests in `UserSearch.test.jsx` using Vitest and React Testing Library verifying debouncing, input control, loading states, empty results, error states, and stale response rejection.
+- Run tests:
+  ```bash
+  cd q4-react-search
+  npm test
+  ```
+
+### AI-Assistance Disclosure
+**None.** Built independently using standard React hooks (`useState`, `useEffect`, `useRef`).\n
