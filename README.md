@@ -128,4 +128,83 @@ A RESTful backend service built using FastAPI to record financial transactions, 
   ```
 
 ### AI-Assistance Disclosure
-**None.** No AI coding assistants or automated code generators were used. Implemented independently using official FastAPI documentation.\n
+**None.** No AI coding assistants or automated code generators were used. Implemented independently using official FastAPI documentation.
+
+---
+
+## Question 2: Python Duplicate Debugging (`q2-python-debugging`)
+
+### What Was Wrong With the Original Code
+The original implementation:
+```python
+def find_duplicates(items):
+    duplicates = []
+    for item in items:
+        if items.count(item) > 1:
+            duplicates.append(item)
+    return duplicates
+```
+1. **Inefficient O(n^2) Complexity**: Calling `items.count(item)` inside the loop forces Python to scan the entire list on every iteration.
+2. **Duplicate Appends**: Every time a repeated item is encountered, it gets added again. For `[1, 2, 3, 2, 4, 1, 5, 2]`, it produced `[1, 2, 2, 1, 2]` instead of `[1, 2]`.
+
+### The Fix
+Implemented in `q2-python-debugging/solution.py`:
+1. Build a frequency dictionary `counts` in a single linear pass (O(n)).
+2. Iterate through `items`, checking if `counts[item] > 1`. Using a `seen = set()`, append each duplicate only on its first occurrence.
+- Returns each duplicate value only once.
+- Preserves the original order in which duplicates first appear.
+- Leaves the input list unmodified.
+
+### Complexity
+- **Time Complexity**: O(n) linear time.
+- **Space Complexity**: O(u) auxiliary space, where u is unique elements.
+
+### System Requirements & Dependencies
+- Python 3.10+ (Standard library only; `pytest` for testing).
+
+### How to Run the Project
+```bash
+cd q2-python-debugging
+python3 solution.py
+```
+
+### How to Test on Your Screen
+Run this command from your terminal:
+```bash
+python3 -c "from solution import find_duplicates; print('Duplicates:', find_duplicates([1, 2, 3, 2, 4, 1, 5, 2]))"
+```
+*Screen Output*:
+```text
+Duplicates: [2, 1]
+```
+Testing with string values:
+```bash
+python3 -c "from solution import find_duplicates; print('Strings:', find_duplicates(['apple', 'banana', 'apple', 'orange', 'banana']))"
+```
+*Screen Output*:
+```text
+Strings: ['apple', 'banana']
+```
+
+### Design Decisions
+- Used standard Python dictionaries and sets to ensure clean, interview-ready, and dependency-free code.
+- Preserved first-seen order rather than returning an unordered set.
+
+### Assumptions
+- Input items are hashable (integers, strings, tuples).
+- Returns an empty list `[]` when the input is empty or has no duplicates.
+
+### Problems Encountered & Solutions
+- Converting a duplicate set directly (`list(set)`) loses the original order of appearance.
+  - *Fix*: Used a `seen` set while iterating through the original input list to retain natural order.
+
+### How the Solution Was Tested
+- 7 unit tests using `pytest` covering the assessment example `[1, 2, 3, 2, 4, 1, 5, 2]`, unique-only lists, multiple duplicate frequencies, string inputs, empty lists, and list immutability.
+- Run tests:
+  ```bash
+  cd q2-python-debugging
+  pytest test_solution.py -v
+  ```
+
+### AI-Assistance Disclosure
+**None.** Solved independently using standard algorithmic patterns.\n
