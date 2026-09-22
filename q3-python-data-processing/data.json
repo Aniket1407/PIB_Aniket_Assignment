@@ -1,0 +1,104 @@
+[
+  {
+    "user_id": "U001",
+    "name": "Amit Sharma",
+    "age": 24,
+    "score": 82
+  },
+  {
+    "user_id": "U002",
+    "name": "Rahul Verma",
+    "age": 26,
+    "score": 95
+  },
+  {
+    "user_id": "U003",
+    "name": "Pooja Patel",
+    "age": 22,
+    "score": 40
+  },
+  {
+    "user_id": "U004",
+    "name": "Sneha Reddy",
+    "age": 28,
+    "score": 88
+  },
+  {
+    "user_id": "U005",
+    "name": "Vikram Malhotra",
+    "age": 29,
+    "score": 50
+  },
+  {
+    "user_id": "U006",
+    "name": "Ananya Roy",
+    "age": 23,
+    "score": 76
+  },
+  {
+    "user_id": "U001",
+    "name": "Amit Sharma (Duplicate High)",
+    "age": 24,
+    "score": 99
+  },
+  {
+    "user_id": "U007",
+    "name": "Deepak Gupta",
+    "age": 31,
+    "score": 62
+  },
+  {
+    "user_id": "U008",
+    "name": "Kavita Nair",
+    "age": 27,
+    "score": 35
+  },
+  {
+    "user_id": "U009",
+    "name": "Rohan Joshi",
+    "age": 25,
+    "score": 91
+  },
+  {
+    "user_id": "U010",
+    "name": "Meera Iyer",
+    "age": 30,
+    "score": 79
+  },
+  {
+    "user_id": "U011",
+    "name": "Siddharth Rao",
+    "age": 28,
+    "score": 84
+  },
+  {
+    "user_id": "U003",
+    "name": "Pooja Patel (Duplicate Later High)",
+    "age": 22,
+    "score": 85
+  },
+  {
+    "user_id": "U012",
+    "name": "Divya Deshmukh",
+    "age": 24,
+    "score": 73
+  },
+  {
+    "user_id": "U013",
+    "name": "Manish Tiwari",
+    "age": 33,
+    "score": 67
+  },
+  {
+    "user_id": "U014",
+    "name": "Shweta Bose",
+    "age": 26,
+    "score": 90
+  },
+  {
+    "user_id": "U015",
+    "name": "Karan Mehra",
+    "age": 29,
+    "score": 58
+  }
+]

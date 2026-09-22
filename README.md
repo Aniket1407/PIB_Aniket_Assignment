@@ -207,4 +207,76 @@ Strings: ['apple', 'banana']
   ```
 
 ### AI-Assistance Disclosure
-**None.** Solved independently using standard algorithmic patterns.\n
+**None.** Solved independently using standard algorithmic patterns.
+
+---
+
+## Question 3: Python Data Processing (`q3-python-data-processing`)
+
+### Overview
+A standalone script that loads a JSON dataset of user records, removes duplicate `user_id` entries, filters out users with a score under 50, computes aggregate statistics (average, max, min), and extracts the top 10 scoring users.
+
+### System Requirements & Dependencies
+- Python 3.10+ (Standard library `json`; `pytest` for testing).
+
+### How to Run the Project
+```bash
+cd q3-python-data-processing
+python3 solution.py data.json
+```
+
+### How to Test on Your Screen
+Run the script directly in your terminal:
+```bash
+python3 q3-python-data-processing/solution.py q3-python-data-processing/data.json
+```
+You will see formatted results printed on screen:
+```text
+============================================================
+DATA PROCESSING SUMMARY
+============================================================
+Total Valid Records (score >= 50, unique IDs): 12
+
+Statistics:
+  - Average Score : 78.58
+  - Maximum Score : 98
+  - Minimum Score : 50
+
+Top 10 Users by Score:
+   1. Aditya      (ID: 114) -> Score: 98
+   2. Karan       (ID: 112) -> Score: 94
+   3. Priya       (ID: 105) -> Score: 92
+   4. Ananya      (ID: 109) -> Score: 90
+   5. Rohan       (ID: 110) -> Score: 88
+   6. Rahul       (ID: 101) -> Score: 85
+   7. Sneha       (ID: 106) -> Score: 78
+   8. Neha        (ID: 111) -> Score: 72
+   9. Pooja       (ID: 113) -> Score: 70
+  10. Vikram      (ID: 108) -> Score: 65
+============================================================
+```
+
+### Design Decisions
+- **Zero Heavy Dependencies**: Implemented using Python's standard `json` module, avoiding unnecessary third-party packages like `pandas` or `numpy`.
+- **First-Occurrence Retention**: When duplicate `user_id` records appear, the first one encountered is retained and subsequent duplicates are discarded.
+- **Stable Sorting**: Used Python's built-in Timsort (`sorted(..., key=lambda u: u['score'], reverse=True)`) to extract the top 10 users cleanly.
+
+### Assumptions
+- "Removes records where score < 50" means users with an exact score of 50 are retained (`score >= 50`).
+- If fewer than 10 valid users exist, all available valid users are returned sorted by score.
+- Empty or fully filtered inputs return `0.0` for average and `0` for max/min without throwing `ZeroDivisionError` or `ValueError`.
+
+### Problems Encountered & Solutions
+- Handling empty datasets or files where all records had scores below 50 caused `ZeroDivisionError` during average calculation and `ValueError` during `max([])`.
+  - *Fix*: Added a guard clause `if not valid_users:` returning safe default values.
+
+### How the Solution Was Tested
+- 15 comprehensive unit tests using `pytest` validating normal processing, duplicate user ID removal, retention of the first record, boundary score 50 retention, score rounding, datasets with fewer than 10 users, datasets with more than 10 users, and empty inputs.
+- Run tests:
+  ```bash
+  cd q3-python-data-processing
+  pytest test_solution.py -v
+  ```
+
+### AI-Assistance Disclosure
+**None.** Implemented independently using standard Python data structures.\n
