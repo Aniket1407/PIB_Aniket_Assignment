@@ -351,4 +351,81 @@ useEffect(() => {
   ```
 
 ### AI-Assistance Disclosure
-**None.** Built independently using standard React hooks (`useState`, `useEffect`, `useRef`).\n
+**None.** Built independently using standard React hooks (`useState`, `useEffect`, `useRef`).
+
+---
+
+## Question 5: React Bug Fixing (`q5-react-bug-fixing`)
+
+### Overview
+Identified and corrected all bugs in the provided `UserList` component:
+```jsx
+// Original flawed component:
+function UserList({ users }) {
+  const [selectedUser, setSelectedUser] = useState(null);
+  useEffect(() => {
+    console.log("Selected:", selectedUser);
+  });
+  return (
+    <div>
+      {users.map((user) => (
+        <div onClick={() => setSelectedUser(user)}>
+          {user.name}
+        </div>
+      ))}
+      <button onClick={() => setSelectedUser(null)}>Clear</button>
+    </div>
+  );
+}
+```
+
+### Bugs Identified & Remediated
+1. **Missing `key` Prop**: React could not track list elements, causing reconciliation warnings. Fixed with `key={user.id}`.
+2. **Missing `useEffect` Dependency Array**: Ran on every single component render. Fixed by adding `[selectedUser]`.
+3. **Stale State from Storing Full Object**: Storing `{ id, name }` in state created stale duplicates of parent data. Fixed by storing only `selectedUserId` as state and deriving `selectedUser = users.find(u => u.id === selectedUserId) ?? null` dynamically during render.
+4. **Unchecked `users` Prop**: Calling `.map()` on `undefined` threw a runtime error. Added default parameter `users = []`.
+5. **Accessibility**: `<div onClick>` was not keyboard-focusable. Replaced with semantic `<button type="button">`.
+6. **Missing Visual Feedback**: Added visible selection display (`Selected User: {selectedUser.name}`).
+7. **Orphaned Selection Synchronization**: Added synchronization so deleting the selected user safely resets selection to `null`.
+
+### System Requirements & Dependencies
+- Node.js 18+ and npm
+- Packages: `react`, `react-dom`, `vite`, `vitest`, `@testing-library/react`
+
+### How to Run the Project
+```bash
+cd q5-react-bug-fixing
+npm install
+npm run dev
+```
+Open `http://localhost:5173` in your browser.
+
+### How to Test on Your Screen
+1. Open `http://localhost:5173` in your browser.
+2. **Test Selecting a User**: Click on *Rahul Sharma* or *Priya Patel*. The active user is highlighted and `Selected User: <Name> (ID: <id>)` is displayed below.
+3. **Test Clear Button**: Click **Clear Selection**. The selection resets cleanly to `None`.
+4. **Test Derived State on Deletion**: Select *Priya Patel (ID: 2)*, then click **Remove Priya (ID: 2)**. Priya is removed from the list, and the selection safely updates to `None` without throwing an error.
+5. **Browser Console Check (`F12`)**: Open Console tab. Notice zero React `key` warnings and no infinite render logs.
+
+### Design Decisions
+- **Derived State Pattern**: Storing primitive ID (`selectedUserId`) and computing the selected object dynamically avoids stale state synchronization bugs.
+- **Semantic HTML**: Using `<button>` ensures standard keyboard accessibility.
+
+### Assumptions
+- Each user object has a unique `id` and a `name` attribute.
+- The `Clear` button resets selection to `null`.
+
+### Problems Encountered & Solutions
+- Storing the full user object required manual synchronization in `useEffect` when `users` changed.
+  - *Fix*: Derived state (`selectedUserId` + `users.find()`) eliminated complex synchronization entirely.
+
+### How the Solution Was Tested
+- 11 unit tests in `UserList.test.jsx` using Vitest verifying rendering, unique keys, selection updates, clearing, derived state, user deletion safety, and absence of infinite loops.
+- Run tests:
+  ```bash
+  cd q5-react-bug-fixing
+  npm test
+  ```
+
+### AI-Assistance Disclosure
+**None.** Diagnosed and solved independently based on React best practices.\n
